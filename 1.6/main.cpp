@@ -1,26 +1,10 @@
 #include <cstdlib>
 #include <ctime>
+#include <getRandStr.hpp>
 #include <iostream>
 #include <string>
+
 using namespace std;
-
-static const char alphanum[] = "0123456789"
-                               "!@#$%^&*"
-                               "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                               "abcdefghijklmnopqrstuvwxyz";
-
-int stringLength = sizeof(alphanum) - 1;
-
-char genRandom() { return alphanum[rand() % stringLength]; }
-
-string genRandomStr(int len = rand()) {
-
-    std::string Str;
-    for (unsigned int i = 0; i < len; ++i) {
-        Str += genRandom();
-    }
-    return Str;
-}
 
 void permute(string str, int low) {
     if (low == str.size() - 1) {
@@ -40,11 +24,15 @@ void permute(string str) {
     permute(str, 0);
 }
 
-int main() {
-    srand(time(0));
+int main(int argc, char **argv) {
+    string str;
+    if (argc == 2) {
+        str = getRandStr(atoi(argv[1]));
+    } else {
+        str = getRandStr();
+    }
 
-    string str = genRandomStr(rand());
-    cout << "we put in " << str.length() << endl;
+    cout << "we put in length" << str.length() << endl;
     permute(str);
     return 0;
 }
