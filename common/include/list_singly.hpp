@@ -37,20 +37,23 @@ template <typename T> class list_signly {
     void push_front(T c) {
         pNode tmp, newNode = new node;
         newNode->data = c;
-        tmp = _head.next;
-        _head.next = newNode;
+        insert(newNode, 0);
+    }
+
+    void insert(pNode newNode, uint32_t pos) {
+        if (pos > _size) {
+            return;
+        }
+        
+        pNode cur = &_head;
+        for (uint32_t i = 0; i < pos; i++) {
+            cur = cur->next;
+        }
+        pNode tmp = cur->next;
+        cur->next = newNode;
         newNode->next = tmp;
         _size++;
     }
-
-    // void insert(pNode newNode, uint32_t pos) {
-    //     if (pos > size) {
-    //         return;
-    //     }
-
-    //     for (uint32_t i = 0; i < pos; i++) {
-    //     }
-    // }
 
     void printAll() {
         pNode cur = _head.next;
