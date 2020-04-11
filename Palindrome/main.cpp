@@ -1,55 +1,9 @@
 #include <cstdlib>
-#include <ctime>
+#include <getRandStr.hpp>
 #include <iostream>
+#include <list_singly.hpp>
 #include <string>
 using namespace std;
-
-typedef struct node_t {
-    node_t *next;
-    char data;
-} node, *pNode;
-
-template <typename T> class list_one {
-  private:
-    pNode _head;
-    pNode _tail;
-    uint32_t _size;
-
-  public:
-    pNode begin() { return _head; };
-    pNode end() { return _tail; };
-    list_one() : _head(nullptr), _tail(nullptr), _size(0) {}
-    ~list_one() {
-        pNode prev;
-        for (size_t i = 0; i < _size; i++) {
-            prev = _head;
-            _head = _head->next;
-            delete prev;
-        }
-    }
-    void push(T c) {
-        if (_size == 0) {
-            _head = _tail = new node;
-            _head->next = nullptr;
-        } else {
-            _tail->next = new node;
-            _tail = _tail->next;
-            _tail->next = nullptr;
-        }
-        _tail->data = c;
-        _size++;
-    }
-    void printAll() {
-        pNode cur = _head;
-        for (size_t i = 0; i < _size; i++) {
-            cout << cur->data;
-            cur = cur->next;
-        }
-        cout << endl;
-    }
-};
-
-typedef list_one<char> listChar;
 
 bool isPalindrome_fastSlowPointer(listChar &l) {
     bool isOdd = true, isPalindrome = true;
@@ -104,24 +58,40 @@ bool isPalindrome_fastSlowPointer(listChar &l) {
 }
 
 int main() {
-    listChar l1, l2;
-    l1.push('1');
-    l1.push('0');
-    l1.push('2');
-    l1.push('0');
-    l1.push('1');
+    listChar l1, l2, l3;
+    uint32_t l1_size = 4, l2_size = 6;
+
+    /* test odd string */
+    string randStr1 = getRandStr(l1_size+1);
+    l1.push_back(*(randStr1.end()-1)); //insert middle
+    for (size_t i = 0; i < l1_size; i++) {
+        l1.push_front(randStr1[i]);
+        l1.push_back(randStr1[i]);
+    }
+    cout << "check list 1 is: ";
     l1.printAll();
     cout << "is Palindrome? " << isPalindrome_fastSlowPointer(l1) << endl;
+    l1.printAll();
 
-    
-    l2.push('1');
-    l2.push('0');
-    l2.push('2');
-    l2.push('2');
-    l2.push('0');
-    l2.push('1');
+    /* test even string */
+    string randStr2 = getRandStr(l2_size);
+    for (size_t i = 0; i < l2_size; i++) {
+        l2.push_back(randStr2[i]);
+        l2.push_front(randStr2[i]);
+    }
+    cout << "check list 2 is: ";
     l2.printAll();
-    cout << "is Palindrome? " << isPalindrome_fastSlowPointer(l1) << endl;
+    cout << "is Palindrome? " << isPalindrome_fastSlowPointer(l2) << endl;
     l2.printAll();
+
+    /* test non-Palindrome string */
+    string randStr3 = getRandStr(10);
+    for (size_t i = 0; i < 10; i++) {
+        l3.push_back(randStr3[i]);
+    }
+    cout << "check list 3 is: ";
+    l3.printAll();
+    cout << "is Palindrome? " << isPalindrome_fastSlowPointer(l3) << endl;
+    l3.printAll();
     return 0;
 }
