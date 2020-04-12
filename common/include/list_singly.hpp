@@ -18,7 +18,8 @@ template <typename T> class list_signly {
     uint32_t size() { return _size; }
     list_signly() : _size(0) { _sentry = &_head; }
     ~list_signly() {
-        for (pNode prevTmp, tmp = _head.next; tmp != nullptr;) {
+        pNode prevTmp, tmp = _head.next;
+        for (uint32_t i = 0; tmp != nullptr && i < _size; i++) {
             prevTmp = tmp;
             tmp = tmp->next;
             delete prevTmp;
@@ -67,3 +68,4 @@ template <typename T> class list_signly {
 
 typedef list_signly<char> listChar;
 typedef list_signly<char>::pNode pNode;
+typedef list_signly<char>::node nodeC;
