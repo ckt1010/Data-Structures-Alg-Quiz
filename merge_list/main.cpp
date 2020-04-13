@@ -44,6 +44,10 @@ int main() {
     merge(*l1, *l2, *newlist);
     cout << "After merge: ";
     newlist->printAll();
+    newlist->erase(1);
+    newlist->erase(-1);
+    cout << "After delete: ";
+    newlist->printAll();
     delete newlist;//since l1 and l2 merged to newlist, only newlist need delete
     return 0;
 }

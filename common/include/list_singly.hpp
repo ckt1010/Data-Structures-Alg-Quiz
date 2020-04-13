@@ -68,6 +68,35 @@ template <typename T> class list_signly {
                 }
         cout << endl;
     }
+
+    void erase(int32_t pos) {
+        pNode first = _head.next, last = _head.next, prevLast;
+        if (pos >= 0) {
+            for (size_t i = 0; last != nullptr && i < pos; i++) {
+                prevLast = last;
+                last = last->next;
+            }
+            if (nullptr == last) {
+                throw "erase postion larger than list size";
+            }
+        } else {
+            pos = -pos;
+            for (size_t i = 0; first != nullptr && i < pos; i++) {
+                first = first->next;
+            }
+            if (nullptr == last) {
+                throw "erase postion larger than list size";
+            }
+            for (; first != _sentry;) {
+                first = first->next;
+                prevLast = last;
+                last = last->next;
+            }
+        }
+        prevLast->next = last->next;
+        delete last;
+        _size--;
+    }
 };
 
 typedef list_signly<char> listChar;
