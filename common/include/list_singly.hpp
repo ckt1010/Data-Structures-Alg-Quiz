@@ -25,6 +25,11 @@ template <typename T> class list_signly {
             delete prevTmp;
         }
     }
+    void push_back(pNode n) {
+        _sentry->next = n;
+        _sentry = _sentry->next;
+        _size++;
+    }
 
     void push_back(T c) {
         pNode _tail = new node;
@@ -58,10 +63,9 @@ template <typename T> class list_signly {
 
     void printAll() {
         pNode cur = _head.next;
-        for (size_t i = 0; i < _size; i++) {
-            cout << cur->data;
-            cur = cur->next;
-        }
+        for (; cur != nullptr; cur = cur->next) {
+            cout << cur->data << ", ";
+                }
         cout << endl;
     }
 };
