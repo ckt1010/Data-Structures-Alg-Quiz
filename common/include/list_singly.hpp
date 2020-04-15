@@ -16,7 +16,10 @@ template <typename T> class list_signly {
     pNode begin() { return _head.next; };
     pNode end() { return _sentry; };
     uint32_t size() { return _size; }
-    list_signly() : _size(0) { _sentry = &_head; }
+    list_signly() : _size(0) {
+        _sentry = &_head;
+        _head.next = nullptr;
+    }
     ~list_signly() {
         pNode prevTmp, tmp = _head.next;
         for (uint32_t i = 0; tmp != nullptr && i < _size; i++) {
@@ -38,6 +41,16 @@ template <typename T> class list_signly {
         _sentry = _sentry->next;
         _tail->next = nullptr;
         _size++;
+    }
+
+    void pop_front(T &c) {
+        if (nullptr != _head.next) {
+            c = _head.next->data;
+            pNode tmp = _head.next;
+            _head.next = _head.next->next;
+            delete tmp;
+            _size--;
+        }
     }
 
     void push_front(T c) {
