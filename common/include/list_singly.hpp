@@ -1,4 +1,8 @@
 #pragma once
+#include <stdint.h>
+#include <iostream>
+
+using namespace std;
 
 template <typename T> class list_signly {
   public:
@@ -110,8 +114,24 @@ template <typename T> class list_signly {
         delete last;
         _size--;
     }
+
+    void sort_bobble() {
+        pNode end = nullptr, j;
+        while (end != _head.next->next) {
+            for (j = &_head; j->next->next != end; j = j->next) {
+                if (j->next->data > j->next->next->data) {
+                    pNode prev = j, local = j->next, back = j->next->next;
+                    prev->next = back;
+                    local->next = back->next;
+                    back->next = local;
+                }
+            }
+            end = j->next;
+        }
+    }
 };
 
 typedef list_signly<char> listChar;
 typedef list_signly<char>::pNode pNode;
 typedef list_signly<char>::node nodeC;
+typedef list_signly<uint32_t> listUint;
