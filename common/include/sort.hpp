@@ -15,3 +15,15 @@ template <typename T> void sort_bobble(T &in, uint32_t size) {
     }
 }
 
+template <typename T> void sort_shell(T &in, uint32_t size) {
+    for (uint32_t gap = size / 3; gap > 0; gap = gap / 3) {
+        uint32_t remainder = size % gap;
+        for (size_t i = 0; i < size - (gap + remainder); i++) {
+            for (size_t j = i + gap; j < size; j += gap) {
+                if (in[i] > in[j]) {
+                    swap(in[i], in[j]);
+                }
+            }
+        }
+    }
+}
