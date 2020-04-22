@@ -35,6 +35,18 @@ int main() {
         getRandArr randArr1(ARRAY_NUM);
         arr Arr1 = randArr1.get();
         arr ArrRight1 = randArr1.getAfterSort();
+        auto t1 = chrono::high_resolution_clock::now();
+        sort_bobble1(Arr1, Arr1.size());
+        auto t2 = chrono::high_resolution_clock::now();
+
+        cout << "Bobble enhance with array sorting execute time: "
+             << chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count()
+             << "ms and check result: " << (ArrRight1 == Arr1) << endl;
+    }
+    {
+        getRandArr randArr1(ARRAY_NUM);
+        arr Arr1 = randArr1.get();
+        arr ArrRight1 = randArr1.getAfterSort();
         listUint in;
         for (size_t i = 0; i < Arr1.size(); i++) {
             in.push_back(Arr1[i]);
@@ -43,6 +55,33 @@ int main() {
         in.sort_bobble();
         auto t2 = chrono::high_resolution_clock::now();
         cout << "Bobble with list sorting execute time: "
+             << chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count()
+             << "ms and check result: " << checkList(in, ArrRight1) << endl;
+    }
+    {
+        getRandArr randArr1(ARRAY_NUM);
+        arr Arr1 = randArr1.get();
+        arr ArrRight1 = randArr1.getAfterSort();
+        auto t1 = chrono::high_resolution_clock::now();
+        sort_insert(Arr1, Arr1.size());
+        auto t2 = chrono::high_resolution_clock::now();
+
+        cout << "Insert sort with array sorting execute time: "
+             << chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count()
+             << "ms and check result: " << (ArrRight1 == Arr1) << endl;
+    }
+   {
+        getRandArr randArr1(ARRAY_NUM);
+        arr Arr1 = randArr1.get();
+        arr ArrRight1 = randArr1.getAfterSort();
+        listUint in;
+        for (size_t i = 0; i < Arr1.size(); i++) {
+            in.push_back(Arr1[i]);
+        }
+        auto t1 = chrono::high_resolution_clock::now();
+        in.sort_insert();
+        auto t2 = chrono::high_resolution_clock::now();
+        cout << "Insert with list sorting execute time: "
              << chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count()
              << "ms and check result: " << checkList(in, ArrRight1) << endl;
     }
