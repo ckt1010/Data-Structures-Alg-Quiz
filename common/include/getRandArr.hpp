@@ -7,7 +7,7 @@
 
 using namespace std;
 
-#define MAX_RAND 1000
+#define MAX_RAND 10
 #define MIN_RAND 0
 
 class getRandArr {

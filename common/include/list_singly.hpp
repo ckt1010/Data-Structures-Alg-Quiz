@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include <iostream>
+#include <limits>
 
 using namespace std;
 
@@ -15,6 +16,13 @@ template <typename T> class list_signly {
     node _head;
     pNode _sentry;
     uint32_t _size;
+    void _swap(pNode pN1, pNode prevpN1, pNode pN2, pNode prevpN2) {
+        pNode tmp = pN1->next;
+        prevpN1->next = pN2;
+        pN1->next = pN2->next;
+        prevpN2->next = pN1;
+        pN2->next = tmp;
+    }
 
   public:
     pNode begin() { return _head.next; };
@@ -127,6 +135,46 @@ template <typename T> class list_signly {
                 }
             }
             end = j->next;
+        }
+    }
+
+    void sort_insert() {
+        push_front(numeric_limits<T>::min());//insert minimum node
+        pNode prevCompareNode = _head.next->next, compareNode = prevCompareNode->next;
+        for (; compareNode != nullptr; compareNode = prevCompareNode->next) {
+            if (prevCompareNode->data > compareNode->data) {
+                for (pNode i = _head.next; i != prevCompareNode; i = i->next) {
+                    if (i->data <= compareNode->data &&
+                        i->next->data > compareNode->data) { // find insert position
+                        pNode tmpNode = i->next;
+                        prevCompareNode->next = compareNode->next;
+                        i->next = compareNode;
+                        compareNode->next = tmpNode;
+                        break;
+                    }
+                }
+            } else {
+                prevCompareNode = prevCompareNode->next;
+            }
+        }
+        T tmp;
+        pop_front(tmp);
+    }
+
+    void sort_select() {
+        pNode prevNode = &_head, backNode = prevNode->next;
+        for (; backNode != nullptr;
+             prevNode = prevNode->next, backNode = prevNode->next) {
+            pNode minNode = backNode, prevMinNode = prevNode;
+            for (pNode i = backNode; i->next != nullptr; i = i->next) {
+                if(minNode->data > i->next->data) {
+                    prevMinNode = i;
+                    minNode = i->next;
+                }
+            }
+            if (backNode != minNode) {
+                _swap(minNode, prevMinNode, backNode, prevNode);
+            }
         }
     }
 };
